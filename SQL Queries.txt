@@ -1,0 +1,18 @@
+Select all entries:
+
+SELECT * FROM `FoodEntries`
+left outer join `FoodTypes` on `FoodEntries`.`itemTypeId`=`FoodTypes`.`id`
+
+Get the amount of every item per day:
+
+SELECT itemTypeId, FoodTypes.name, DATE(datetime) DateOnly, SUM(amount) FROM `FoodEntries`
+left outer join `FoodTypes` on `FoodEntries`.`itemTypeId`=`FoodTypes`.`id`
+GROUP BY DATE(dateonly), itemTypeId;
+
+Get the amount of every item per day for only the past 31 days:
+
+SELECT FoodTypes.name Name, DATE(datetime) DateOnly, SUM(amount) Amount FROM `FoodEntries` left outer join `FoodTypes` on `FoodEntries`.`itemTypeId`=`FoodTypes`.`id` where datediff(datetime, CURDATE()) <= 31 GROUP BY DATE(dateonly), itemTypeId
+
+Insert foodentries
+
+INSERT INTO `ntfb`.`FoodEntries` (`itemTypeId`, `datetime`, `amount`) VALUES ('1', '2011-10-12', '20')

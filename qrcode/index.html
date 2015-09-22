@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>getUserMedia Demo 2</title>
+<style>
+video {
+    border:5px solid black;
+    width:480px;
+    height:360px;
+}
+canvas {
+    border:5px solid black;
+    width:480px;
+    height:360px;     
+}
+button {
+  font: 18px sans-serif;
+  padding: 8px;
+}
+</style>
+
+<script type="text/javascript" src="js/qrcode/grid.js"></script>
+<script type="text/javascript" src="js/qrcode/version.js"></script>
+<script type="text/javascript" src="js/qrcode/detector.js"></script>
+<script type="text/javascript" src="js/qrcode/formatinf.js"></script>
+<script type="text/javascript" src="js/qrcode/errorlevel.js"></script>
+<script type="text/javascript" src="js/qrcode/bitmat.js"></script>
+<script type="text/javascript" src="js/qrcode/datablock.js"></script>
+<script type="text/javascript" src="js/qrcode/bmparser.js"></script>
+<script type="text/javascript" src="js/qrcode/datamask.js"></script>
+<script type="text/javascript" src="js/qrcode/rsdecoder.js"></script>
+<script type="text/javascript" src="js/qrcode/gf256poly.js"></script>
+<script type="text/javascript" src="js/qrcode/gf256.js"></script>
+<script type="text/javascript" src="js/qrcode/decoder.js"></script>
+<script type="text/javascript" src="js/qrcode/QRcode.js"></script>
+<script type="text/javascript" src="js/qrcode/findpat.js"></script>
+<script type="text/javascript" src="js/qrcode/alignpat.js"></script>
+<script type="text/javascript" src="js/qrcode/databr.js"></script>
+</head>
+<body>
+<video id="vid" autoplay="true"></video>
+<canvas id="qr-canvas"></canvas>
+<br> 
+
+<script>
+video = document.getElementById("vid");
+canvas = document.getElementById("qr-canvas");
+canvas.width = 480;
+canvas.height = 360;  
+
+function read(a)
+{
+	alert(a);
+}	
+	
+qrcode.callback = read;
+
+navigator.webkitGetUserMedia({video:true}, gotStream, function() {}); 
+
+function gotStream(stream) {
+  video.src = webkitURL.createObjectURL(stream);
+  setInterval(function() {
+		canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+		qrcode.decode()
+	}, 1);
+}
+</script>
+</body>
+</html>
